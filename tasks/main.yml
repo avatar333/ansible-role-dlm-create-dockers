@@ -15,3 +15,7 @@
 
 - include: create_mylar.yml
   tags: create_mylar_docker
+
+- include: create_munin.yml
+  tags: create_munin_docker
+

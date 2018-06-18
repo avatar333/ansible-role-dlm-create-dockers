@@ -1,0 +1,31 @@
+---
+
+#- name: "Create directories"
+#  file:
+#    path: "{{ item }}"
+#    state: directory 
+#    owner: kevinp
+#    group: kevinp
+#    mode: 0755
+#  with_items:
+#    - "{{ MUNIN_CONFIG }}"
+#    - "{{ MUNIN_DOWNLOADS }}"
+
+- name: "Create munin docker"
+  vars:
+    MUNIN_HOSTNAME: munin01.example.com
+  command: >
+    docker create --name=munin --userns=host --net=host --hostname=munin -p 8000:8000   -v /var/log/munin:/var/log/munin   -v /var/lib/munin:/var/lib/munin   -v /var/run/munin:/var/run/munin   -v /var/cache/munin:/var/cache/munin   -e MUNIN_USERS='admin'   -e MUNIN_PASSWORDS='admin'   -e SMTP_HOST=smtp.gmail.com   -e SMTP_PORT=465   -e SMTP_USERNAME=kevin.pillay@gmail.com   -e SMTP_PASSWORD=smtp-password   -e SMTP_USE_TLS=true   -e SMTP_ALWAYS_SEND=true   -e SMTP_MESSAGE='[${var:group};${var:host}] -> ${var:graph_title} -> warnings: ${loop<,>:wfields  ${var:label}=${var:value}} / criticals: ${loop<,>:cfields  ${var:label}=${var:value}}'   -e ALERT_RECIPIENT=kevin.pillay@gmail.com   -e ALERT_SENDER=alerts@thedarkarts.za.net -e NODES="dlm4:192.168.1.33"   -e SNMP_NODES="router1:192.168.1.1:9999"   buildfailure/munin-server
+
+- name: "Create munin.service service file"
+  vars:
+    DOCKER_DESC: "Munin Server"
+    DOCKER_NAME: munin
+  template:
+    src: docker_template.service.j2
+    dest: /usr/lib/systemd/system/munin.service
+
+- name: "Start Munin docker"
+  service:
+    name: munin
+    state: started

@@ -13,9 +13,7 @@
     - "{{ PLEX_MOVIES }}"
 
 - name: "Create plex docker"
-  vars:
-    PLEX_HOSTNAME: plex01.example.com
-  command: "docker create --name=plex --userns=host --net=host --hostname={{ PLEX_HOSTNAME }} -e VERSION=latest -e PUID=1000 -e PGID=1000 -e TZ=Africa/Johannesburg -v /config:{{ PLEX_CONFIG }} -v /data/tvseries:{{ PLEX_TVSERIES }} -v /data/movies:{{ PLEX_MOVIES }} linuxserver/plex"
+  command: "docker create --name=plex --userns=host --net=host --hostname=plex --domainname=thedarkarts.za.net -e VERSION=latest -e PUID=1000 -e PGID=1000 -e TZ=Africa/Johannesburg -v /config:{{ PLEX_CONFIG }} -v /data/tvseries:{{ PLEX_TVSERIES }} -v /data/movies:{{ PLEX_MOVIES }} linuxserver/plex"
 
 - name: "Create plex.service service file"
   vars:
