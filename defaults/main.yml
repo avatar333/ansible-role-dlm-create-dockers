@@ -7,3 +7,11 @@ PLEX_MOVIES: /plex/movies
 
 DELUGE_CONFIG: /deluge/config
 DELUGE_DOWNLOADS: /deluge/downloads
+
+SONARR_CONFIG: /sonarr/config
+SONARR_TVSERIES: /sonarr/tvseries
+SONARR_DOWNLOADS: /sonarr/downloads
+
+SABNZBD_CONFIG: /sabnzbd/config
+SABNZBD_DOWNLOADS: /sabnzbd/downloads
+SABNZBD_INCOMPLETE_DOWNLOADS: /sabnzbd/incomplete/downloads

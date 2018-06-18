@@ -1,0 +1,31 @@
+---
+
+- name: "Create directories"
+  file:
+    path: "{{ item }}"
+    state: directory 
+    owner: kevinp
+    group: kevinp
+    mode: 0755
+  with_items:
+    - "{{ SABNZBD_CONFIG }}"
+    - "{{ SABNZBD_DOWNLOADS }}"
+    - "{{ SABNZBD_INCOMPLETE_DOWNLOADS }}"
+
+- name: "Create sabnzbd docker"
+  vars:
+    SABNZBD_HOSTNAME: sabnzbd01.example.com
+  command: "docker create --name=sabnzbd --userns=host --net=host --hostname={{ SABNZBD_HOSTNAME }} -e VERSION=latest -e PUID=1000 -e PGID=1000 -e TZ=Africa/Johannesburg -v /config:{{ SABNZBD_CONFIG }} -v /downloads:{{ SABNZBD_DOWNLOADS }} -v /incomplete-downloads:{{ SABNZBD_INCOMPLETE_DOWNLOADS }} linuxserver/sabnzbd"
+
+- name: "Create sabnzbd.service service file"
+  vars:
+    DOCKER_DESC: "Sabnzbd Usenet Download Server"
+    DOCKER_NAME: sabnzbd
+  template:
+    src: docker_template.service.j2
+    dest: /usr/lib/systemd/system/sabnzbd.service
+
+- name: "Start Sabnzbd docker"
+  service:
+    name: sabnzbd
+    state: started

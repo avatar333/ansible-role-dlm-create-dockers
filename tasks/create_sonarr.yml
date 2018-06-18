@@ -1,0 +1,30 @@
+---
+
+- name: "Create directories"
+  file:
+    path: "{{ item }}"
+    state: directory 
+    owner: kevinp
+    group: kevinp
+    mode: 0755
+  with_items:
+    - "{{ SONARR_CONFIG }}"
+    - "{{ SONARR_DOWNLOADS }}"
+
+- name: "Create sonarr docker"
+  vars:
+    SONARR_HOSTNAME: sonarr01.example.com
+  command: "docker create --name=sonarr --userns=host --net=host --hostname={{ SONARR_HOSTNAME }} -p 8989:8989 -e VERSION=latest -e PUID=1000 -e PGID=1000 -e TZ=Africa/Johannesburg -v /etc/localtime:/etc/localtime:ro -v /config:{{ SONARR_CONFIG }} -v /tvseries:{{ SONARR_TVSERIES }} -v /downloads:{{ SONARR_DOWNLOADS }} linuxserver/sonarr"
+
+- name: "Create sonarr.service service file"
+  vars:
+    DOCKER_DESC: "Sonarr Torrent Server"
+    DOCKER_NAME: sonarr
+  template:
+    src: docker_template.service.j2
+    dest: /usr/lib/systemd/system/sonarr.service
+
+- name: "Start Sonarr docker"
+  service:
+    name: sonarr
+    state: started
