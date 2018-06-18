@@ -1,0 +1,30 @@
+---
+
+- name: "Create directories"
+  file:
+    path: "{{ item }}"
+    state: directory 
+    owner: kevinp
+    group: kevinp
+    mode: 0755
+  with_items:
+    - "{{ DELUGE_CONFIG }}"
+    - "{{ DELUGE_DOWNLOADS }}"
+
+- name: "Create deluge docker"
+  vars:
+    DELUGE_HOSTNAME: deluge01.example.com
+  command: "docker create --name=deluge --userns=host --net=host --hostname={{ DELUGE_HOSTNAME }} -e VERSION=latest -e PUID=1000 -e PGID=1000 -e TZ=Africa/Johannesburg -v /config:{{ DELUGE_CONFIG }} -v /downloads:{{ DELUGE_DOWNLOADS }} linuxserver/deluge"
+
+- name: "Create deluge.service service file"
+  vars:
+    DOCKER_DESC: "Deluge Torrent Server"
+    DOCKER_NAME: deluge
+  template:
+    src: docker_template.service.j2
+    dest: /usr/lib/systemd/system/deluge.service
+
+- name: "Start Deluge docker"
+  service:
+    name: deluge
+    state: started

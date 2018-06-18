@@ -36,6 +36,13 @@ passed in as parameters) is always nice for users too:
       roles:
          - { role: ansible-role-dlm-create-dockers, x: 42 }
 
+Handy Commands
+--------------
+
+docker inspect <docker name / container ID>
+
+docker exec -it <docker name> /bin/bash
+
 License
 -------
 

@@ -1,2 +1,9 @@
 ---
 # defaults file for ansible-role-dlm-create-dockers
+
+PLEX_CONFIG: /plex/config
+PLEX_TVSERIES: /plex/tvseries
+PLEX_MOVIES: /plex/movies
+
+DELUGE_CONFIG: /deluge/config
+DELUGE_DOWNLOADS: /deluge/downloads

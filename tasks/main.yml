@@ -1,2 +1,8 @@
 ---
 # tasks file for ansible-role-dlm-create-dockers
+
+- include: create_plex.yml
+  tags: create_plex_docker
+
+- include: create_deluge.yml
+  tags: create_deluge_docker
