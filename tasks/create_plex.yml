@@ -1,5 +1,7 @@
 ---
 
+# https://hub.docker.com/r/linuxserver/plex/
+
 - name: "Create directories"
   file:
     path: "{{ item }}"
@@ -13,7 +15,7 @@
     - "{{ PLEX_MOVIES }}"
 
 - name: "Create plex docker"
-  command: "docker create --name=plex --userns=host --net=host --hostname=plex --domainname=thedarkarts.za.net -e VERSION=latest -e PUID=1000 -e PGID=1000 -e TZ=Africa/Johannesburg -v /config:{{ PLEX_CONFIG }} -v /data/tvseries:{{ PLEX_TVSERIES }} -v /data/movies:{{ PLEX_MOVIES }} linuxserver/plex"
+  command: "docker create --name=plex --userns=host --net=host --hostname=plex --domainname=thedarkarts.za.net -e VERSION=latest -e PUID=1000 -e PGID=1000 -e TZ=Africa/Johannesburg -v {{ PLEX_CONFIG }}:/config -v {{ PLEX_TVSERIES }}:/data/tvseries -v {{ PLEX_MOVIES }}:/data/movies linuxserver/plex"
 
 - name: "Create plex.service service file"
   vars:

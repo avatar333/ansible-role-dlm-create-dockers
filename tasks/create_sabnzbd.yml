@@ -1,5 +1,7 @@
 ---
 
+# https://github.com/linuxserver/docker-sabnzbd
+
 - name: "Create directories"
   file:
     path: "{{ item }}"
@@ -15,7 +17,7 @@
 - name: "Create sabnzbd docker"
   vars:
     SABNZBD_HOSTNAME: sabnzbd01.example.com
-  command: "docker create --name=sabnzbd --userns=host --net=host --hostname={{ SABNZBD_HOSTNAME }} -e VERSION=latest -e PUID=1000 -e PGID=1000 -e TZ=Africa/Johannesburg -v /config:{{ SABNZBD_CONFIG }} -v /downloads:{{ SABNZBD_DOWNLOADS }} -v /incomplete-downloads:{{ SABNZBD_INCOMPLETE_DOWNLOADS }} linuxserver/sabnzbd"
+  command: "docker create --name=sabnzbd --userns=host --net=host --hostname={{ SABNZBD_HOSTNAME }} -e VERSION=latest -e PUID=1000 -e PGID=1000 -e TZ=Africa/Johannesburg -v {{ SABNZBD_CONFIG }}:/config -v {{ SABNZBD_DOWNLOADS }}:/downloads -v {{ SABNZBD_INCOMPLETE_DOWNLOADS }}:/incomplete-downloads linuxserver/sabnzbd"
 
 - name: "Create sabnzbd.service service file"
   vars:

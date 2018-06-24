@@ -1,5 +1,7 @@
 ---
 
+# https://github.com/linuxserver/docker-mylar
+
 - name: "Create directories"
   file:
     path: "{{ item }}"
@@ -15,7 +17,7 @@
 - name: "Create mylar docker"
   vars:
     MYLAR_HOSTNAME: mylar01.example.com
-  command: "docker create --name=mylar --userns=host --net=host --hostname={{ MYLAR_HOSTNAME }} -e VERSION=latest -e PUID=1000 -e PGID=1000 -e TZ=Africa/Johannesburg -v /config:{{ MYLAR_CONFIG }} -v /downloads:{{ MYLAR_DOWNLOADS }} -v /comics:{{ MYLAR_COMICS }} linuxserver/mylar"
+  command: "docker create --name=mylar --userns=host --net=host --hostname={{ MYLAR_HOSTNAME }} -e VERSION=latest -e PUID=1000 -e PGID=1000 -e TZ=Africa/Johannesburg -v {{ MYLAR_CONFIG }}:/config -v {{ MYLAR_DOWNLOADS }}:/downloads -v {{ MYLAR_COMICS }}:/comics linuxserver/mylar"
 
 - name: "Create mylar.service service file"
   vars:

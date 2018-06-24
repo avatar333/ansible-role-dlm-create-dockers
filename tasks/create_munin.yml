@@ -1,15 +1,6 @@
 ---
 
-#- name: "Create directories"
-#  file:
-#    path: "{{ item }}"
-#    state: directory 
-#    owner: kevinp
-#    group: kevinp
-#    mode: 0755
-#  with_items:
-#    - "{{ MUNIN_CONFIG }}"
-#    - "{{ MUNIN_DOWNLOADS }}"
+# https://github.com/Scalingo/docker-munin-server
 
 - name: "Create munin docker"
   vars:

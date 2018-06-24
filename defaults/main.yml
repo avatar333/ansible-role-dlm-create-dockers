@@ -20,3 +20,6 @@ MYLAR_CONFIG: /mylar/config
 MYLAR_DOWNLOADS: /mylar/downloads
 MYLAR_COMICS: /mylar/comics
 
+JDOWNLOADER_CONFIG: /jdownloader/config
+JDOWNLOADER_DOWNLOADS: /jdownloader/downloads
+
