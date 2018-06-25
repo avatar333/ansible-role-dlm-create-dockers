@@ -1,12 +1,15 @@
 ---
 
 # https://github.com/Scalingo/docker-munin-server
+# 
+# - Change /etc/nginx/sites-enabled/munin port, from 8080 to 8000
+# - Run htpasswd /etc/munin/htpasswd.users admin and enter password
 
 - name: "Create munin docker"
   vars:
-    MUNIN_HOSTNAME: munin01.example.com
+    MUNIN_HOSTNAME: munin01
   command: >
-    docker create --name=munin --userns=host --net=host --hostname=munin -p 8000:8000   -v /var/log/munin:/var/log/munin   -v /var/lib/munin:/var/lib/munin   -v /var/run/munin:/var/run/munin   -v /var/cache/munin:/var/cache/munin   -e MUNIN_USERS='admin'   -e MUNIN_PASSWORDS='admin'   -e SMTP_HOST=smtp.gmail.com   -e SMTP_PORT=465   -e SMTP_USERNAME=kevin.pillay@gmail.com   -e SMTP_PASSWORD=smtp-password   -e SMTP_USE_TLS=true   -e SMTP_ALWAYS_SEND=true   -e SMTP_MESSAGE='[${var:group};${var:host}] -> ${var:graph_title} -> warnings: ${loop<,>:wfields  ${var:label}=${var:value}} / criticals: ${loop<,>:cfields  ${var:label}=${var:value}}'   -e ALERT_RECIPIENT=kevin.pillay@gmail.com   -e ALERT_SENDER=alerts@thedarkarts.za.net -e NODES="dlm4:192.168.1.33"   -e SNMP_NODES="router1:192.168.1.1:9999"   buildfailure/munin-server
+    docker create --name=munin --userns=host --net=host --hostname={{ MUNIN_HOSTNAME }} -p 8000:8000   -v /var/log/munin:/var/log/munin   -v /var/lib/munin:/var/lib/munin   -v /var/run/munin:/var/run/munin   -v /var/cache/munin:/var/cache/munin   -e MUNIN_USERS='{{ MUNIN_ADMIN_USERNAME }}'   -e MUNIN_PASSWORDS='{{MUNIN_ADMIN_PASSWORD}}'   -e SMTP_HOST=smtp.gmail.com   -e SMTP_PORT=465   -e SMTP_USERNAME=kevin.pillay@gmail.com   -e SMTP_PASSWORD=smtp-password   -e SMTP_USE_TLS=true   -e SMTP_ALWAYS_SEND=true   -e SMTP_MESSAGE='[${var:group};${var:host}] -> ${var:graph_title} -> warnings: ${loop<,>:wfields  ${var:label}=${var:value}} / criticals: ${loop<,>:cfields  ${var:label}=${var:value}}'   -e ALERT_RECIPIENT=kevin.pillay@gmail.com   -e ALERT_SENDER=alerts@thedarkarts.za.net -e NODES="dlm4:192.168.1.33"   -e SNMP_NODES="router1:192.168.1.1:9999"   buildfailure/munin-server
 
 - name: "Create munin.service service file"
   vars:
@@ -20,3 +23,11 @@
   service:
     name: munin
     state: started
+
+- name: "Fix up some configuration issues inside the container"
+  command: "{{ item }}"
+  with_items:
+    - docker exec -i munin /bin/bash -c "sed -i s/8080/8000/g /etc/nginx/sites-enabled/munin"
+    - docker exec -i munin /bin/bash -c "htpasswd -b /etc/munin/htpasswd.users {{MUNIN_ADMIN_USERNAME}} {{MUNIN_ADMIN_PASSWORD}}"
+    - docker exec -i munin /bin/bash -c "service nginx restart"
+

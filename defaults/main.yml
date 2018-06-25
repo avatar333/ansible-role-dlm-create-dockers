@@ -1,25 +1,28 @@
 ---
 # defaults file for ansible-role-dlm-create-dockers
 
-PLEX_CONFIG: /plex/config
-PLEX_TVSERIES: /plex/tvseries
-PLEX_MOVIES: /plex/movies
+PLEX_CONFIG: /dockers/plex/config
+PLEX_TVSERIES: /dockers/plex/tvseries
+PLEX_MOVIES: /dockers/plex/movies
 
-DELUGE_CONFIG: /deluge/config
-DELUGE_DOWNLOADS: /deluge/downloads
+DELUGE_CONFIG: /dockers/deluge/config
+DELUGE_DOWNLOADS: /dockers/deluge/downloads
 
-SONARR_CONFIG: /sonarr/config
-SONARR_TVSERIES: /sonarr/tvseries
-SONARR_DOWNLOADS: /sonarr/downloads
+SONARR_CONFIG: /dockers/sonarr/config
+SONARR_TVSERIES: /dockers/sonarr/tvseries
+SONARR_DOWNLOADS: /dockers/sonarr/downloads
 
-SABNZBD_CONFIG: /sabnzbd/config
-SABNZBD_DOWNLOADS: /sabnzbd/downloads
-SABNZBD_INCOMPLETE_DOWNLOADS: /sabnzbd/incomplete/downloads
+SABNZBD_CONFIG: /dockers/sabnzbd/config
+SABNZBD_DOWNLOADS: /dockers/sabnzbd/downloads
+SABNZBD_INCOMPLETE_DOWNLOADS: /dockers/sabnzbd/incomplete/downloads
 
-MYLAR_CONFIG: /mylar/config
-MYLAR_DOWNLOADS: /mylar/downloads
-MYLAR_COMICS: /mylar/comics
+MYLAR_CONFIG: /dockers/mylar/config
+MYLAR_DOWNLOADS: /dockers/mylar/downloads
+MYLAR_COMICS: /dockers/mylar/comics
 
-JDOWNLOADER_CONFIG: /jdownloader/config
-JDOWNLOADER_DOWNLOADS: /jdownloader/downloads
+JDOWNLOADER_CONFIG: /dockers/jdownloader/config
+JDOWNLOADER_DOWNLOADS: /dockers/jdownloader/downloads
+
+MUNIN_ADMIN_USERNAME: admin
+MUNIN_ADMIN_PASSWORD: admin123
 

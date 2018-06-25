@@ -28,5 +28,5 @@
 
 - name: "Start JDownloader-2 docker"
   service:
-    name: jdownloader
+    name: jdownloader-2
     state: started
