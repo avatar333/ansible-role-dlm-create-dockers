@@ -27,6 +27,12 @@
     src: docker_template.service.j2
     dest: /usr/lib/systemd/system/sabnzbd.service
 
+- name: "Change host_whitelist entry in /config/sabnzbd.ini to allow for host checking for nginx web redirects"
+  lineinfile:
+    path: /dockers/sabnzbd/config/sabnzbd.ini
+    regexp: '^host_whitelist ='
+    line: 'host_whitelist = sabnzbd.{{ ansible_domain }},'
+
 - name: "Start Sabnzbd docker"
   systemd:
     name: sabnzbd
