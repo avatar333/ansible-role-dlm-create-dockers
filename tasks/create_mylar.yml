@@ -28,6 +28,8 @@
     dest: /usr/lib/systemd/system/mylar.service
 
 - name: "Start Mylar docker"
-  service:
+  systemd:
     name: mylar
+    daemon_reload: yes
+    enabled: yes
     state: started

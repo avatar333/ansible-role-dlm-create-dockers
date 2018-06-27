@@ -28,6 +28,8 @@
     dest: /usr/lib/systemd/system/sabnzbd.service
 
 - name: "Start Sabnzbd docker"
-  service:
+  systemd:
     name: sabnzbd
+    daemon_reload: yes
+    enabled: yes
     state: started

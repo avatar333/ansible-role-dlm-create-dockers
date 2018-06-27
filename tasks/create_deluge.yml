@@ -27,6 +27,9 @@
     dest: /usr/lib/systemd/system/deluge.service
 
 - name: "Start Deluge docker"
-  service:
+  systemd:
     name: deluge
+    daemon_reload: yes
+    enabled: yes
     state: started
+

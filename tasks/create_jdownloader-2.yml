@@ -16,7 +16,8 @@
 - name: "Create jdownloader-2 docker"
   vars:
     JDOWNLOADER_HOSTNAME: jdownloader01
-  command: "docker create --name=jdownloader-2 --userns=host --net=host --hostname={{ JDOWNLOADER_HOSTNAME }} -e VERSION=latest -e PUID=1000 -e PGID=1000 -e TZ=Africa/Johannesburg -e KEEP_APP_RUNNING=1 -e VNC_PASSWORD=~jdo~Su5peR1a! -v {{ JDOWNLOADER_CONFIG }}:/config:rw -v {{ JDOWNLOADER_DOWNLOADS }}:/output:rw -p 5800:5800 jlesage/jdownloader-2"
+    VNC_PASSWORD: ~jdoSu5peR1a!
+  command: "docker create --name=jdownloader-2 --userns=host --net=host --hostname={{ JDOWNLOADER_HOSTNAME }} -e VERSION=latest -e PUID=1000 -e PGID=1000 -e TZ=Africa/Johannesburg -e KEEP_APP_RUNNING=1 -e VNC_PASSWORD={{ VNC_PASSWORD }} -v {{ JDOWNLOADER_CONFIG }}:/config:rw -v {{ JDOWNLOADER_DOWNLOADS }}:/output:rw -p 5800:5800 jlesage/jdownloader-2"
 
 - name: "Create jdownloader.service service file"
   vars:
@@ -27,6 +28,8 @@
     dest: /usr/lib/systemd/system/jdownloader-2.service
 
 - name: "Start JDownloader-2 docker"
-  service:
+  systemd:
     name: jdownloader-2
+    daemon_reload: yes
+    enabled: yes
     state: started

@@ -1,6 +1,12 @@
 ---
 # tasks file for ansible-role-dlm-create-dockers
 
+- name: "Restart docker"
+  systemd:
+    name: docker
+    enabled: yes
+    state: restarted
+
 - include: create_plex.yml
   tags: create_plex_docker
 

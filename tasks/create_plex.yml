@@ -26,6 +26,8 @@
     dest: /usr/lib/systemd/system/plex.service
 
 - name: "Start Plex docker"
-  service:
+  systemd:
     name: plex
+    daemon_reload: yes
+    enabled: yes
     state: started

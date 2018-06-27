@@ -27,6 +27,8 @@
     dest: /usr/lib/systemd/system/sonarr.service
 
 - name: "Start Sonarr docker"
-  service:
+  systemd:
     name: sonarr
+    daemon_reload: yes
+    enabled: yes
     state: started

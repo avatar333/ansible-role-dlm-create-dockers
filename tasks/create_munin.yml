@@ -20,8 +20,10 @@
     dest: /usr/lib/systemd/system/munin.service
 
 - name: "Start Munin docker"
-  service:
+  systemd:
     name: munin
+    daemon_reload: yes
+    enabled: yes
     state: started
 
 - name: "Fix up some configuration issues inside the container"
