@@ -1,0 +1,48 @@
+---
+
+# https://hub.docker.com/r/mvance/unbound/
+
+- name: "Create directories"
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: kevinp
+    group: kevinp
+    mode: 0755
+  with_items:
+    - "{{ UNBOUND_CONFIG }}"
+
+- name: "Copy template a-records.conf file"
+  template:
+    src: a-records.conf.j2
+    dest: "{{ UNBOUND_CONFIG }}/a-records.conf"
+
+- name: "Create unbound docker"
+  vars:
+    UNBOUND_HOSTNAME: my-unbound
+  command: "docker create --net=host --userns=host --name {{ UNBOUND_HOSTNAME }} -p 53:53/udp -v \
+            {{ UNBOUND_CONFIG }}/a-records.conf:/opt/unbound/etc/unbound/a-records.conf:ro \
+            --restart=always mvance/unbound:latest"
+
+- name: "Create unbound.service service file"
+  vars:
+    DOCKER_DESC: "Unbound DNS Server"
+    DOCKER_NAME: my-unbound
+  template:
+    src: docker_template.service_NO_RESTART.j2
+    dest: /usr/lib/systemd/system/my-unbound.service
+
+- name: "Start my-unbound docker"
+  systemd:
+    name: my-unbound
+    daemon_reload: yes
+    enabled: yes
+    state: restarted
+
+- name: "Fix up some configuration issues inside the container"
+  command: "{{ item }}"
+  with_items:
+    - docker exec -i my-unbound /bin/bash -c "sed -i s/1.1.1.1@853/8.8.8.8/g /unbound.sh"
+    - docker exec -i my-unbound /bin/bash -c "sed -i s/1.0.0.1@853/8.8.4.4/g /unbound.sh"
+  notify:
+    - restart my-unbound

@@ -27,3 +27,6 @@
 
 - include: create_jdownloader-2.yml
   tags: create_jdownloader-2_docker
+
+- include: create_unbound.yml
+  tags: create_unbound_docker

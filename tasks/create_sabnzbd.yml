@@ -16,8 +16,8 @@
 
 - name: "Create sabnzbd docker"
   vars:
-    SABNZBD_HOSTNAME: sabnzbd01.example.com
-  command: "docker create --name=sabnzbd --userns=host --net=host --hostname={{ SABNZBD_HOSTNAME }} -e VERSION=latest -e PUID=1000 -e PGID=1000 -e TZ=Africa/Johannesburg -v {{ SABNZBD_CONFIG }}:/config -v {{ SABNZBD_DOWNLOADS }}:/downloads -v {{ SABNZBD_INCOMPLETE_DOWNLOADS }}:/incomplete-downloads linuxserver/sabnzbd"
+    SABNZBD_HOSTNAME: sabnzbd
+  command: "docker create --name={{ SABNZBD_HOSTNAME }} --userns=host --net=host --hostname={{ SABNZBD_HOSTNAME }} -e VERSION=latest -e PUID=1000 -e PGID=1000 -e TZ=Africa/Johannesburg -v {{ SABNZBD_CONFIG }}:/config -v {{ SABNZBD_DOWNLOADS }}:/downloads -v {{ SABNZBD_INCOMPLETE_DOWNLOADS }}:/incomplete-downloads linuxserver/sabnzbd"
 
 - name: "Create sabnzbd.service service file"
   vars:
@@ -27,15 +27,20 @@
     src: docker_template.service.j2
     dest: /usr/lib/systemd/system/sabnzbd.service
 
-- name: "Change host_whitelist entry in /config/sabnzbd.ini to allow for host checking for nginx web redirects"
-  lineinfile:
-    path: /dockers/sabnzbd/config/sabnzbd.ini
-    regexp: '^host_whitelist ='
-    line: 'host_whitelist = sabnzbd.{{ ansible_domain }},'
-
 - name: "Start Sabnzbd docker"
   systemd:
     name: sabnzbd
     daemon_reload: yes
     enabled: yes
     state: started
+
+- name: "Wait for docker to start up"
+  pause:
+    seconds: 5
+
+- name: "Change host_whitelist entry in /config/sabnzbd.ini to allow for host checking for nginx web redirects"
+  lineinfile:
+    path: /dockers/sabnzbd/config/sabnzbd.ini
+    regexp: '^host_whitelist ='
+    line: 'host_whitelist = sabnzbd.{{ ansible_domain }},'
+

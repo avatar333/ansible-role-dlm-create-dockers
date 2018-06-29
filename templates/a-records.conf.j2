@@ -1,0 +1,5 @@
+# A Record
+  local-data: "{{ ansible_fqdn }}. A {{ ansible_default_ipv4.address }}"
+
+# PTR Record
+  local-data-ptr: "{{ ansible_default_ipv4.address }} {{ ansible_fqdn }}."

@@ -1,2 +1,10 @@
 ---
 # handlers file for ansible-role-dlm-create-dockers
+
+- name: "restart my-unbound"
+  systemd:
+    name: my-unbound
+    daemon_reload: yes
+    enabled: yes
+    state: restarted
+

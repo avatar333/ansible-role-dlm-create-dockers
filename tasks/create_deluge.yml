@@ -15,8 +15,8 @@
 
 - name: "Create deluge docker"
   vars:
-    DELUGE_HOSTNAME: deluge01.example.com
-  command: "docker create --name=deluge --userns=host --net=host --hostname={{ DELUGE_HOSTNAME }} -e VERSION=latest -e PUID=1000 -e PGID=1000 -e TZ=Africa/Johannesburg -v {{ DELUGE_CONFIG }}:/config -v {{ DELUGE_DOWNLOADS }}:/downloads linuxserver/deluge"
+    DELUGE_HOSTNAME: deluge
+  command: "docker create --name={{ DELUGE_HOSTNAME }} --userns=host --net=host --hostname={{ DELUGE_HOSTNAME }} -e VERSION=latest -e PUID=1000 -e PGID=1000 -e TZ=Africa/Johannesburg -v {{ DELUGE_CONFIG }}:/config -v {{ DELUGE_DOWNLOADS }}:/downloads linuxserver/deluge"
 
 - name: "Create deluge.service service file"
   vars:

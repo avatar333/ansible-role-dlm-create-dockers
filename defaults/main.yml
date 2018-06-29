@@ -1,28 +1,32 @@
 ---
 # defaults file for ansible-role-dlm-create-dockers
 
-PLEX_CONFIG: /dockers/plex/config
+ROOTCFG: /dockers/config
+ROOTDNLD: /dockers/downloads
+
+PLEX_CONFIG: "{{ ROOTCFG }}/plex"
 PLEX_TVSERIES: /dockers/plex/tvseries
 PLEX_MOVIES: /dockers/plex/movies
 
-DELUGE_CONFIG: /dockers/deluge/config
-DELUGE_DOWNLOADS: /dockers/deluge/downloads
+DELUGE_CONFIG: "{{ ROOTCFG }}/deluge"
+DELUGE_DOWNLOADS: "{{ ROOTDNLD }}/deluge"
 
-SONARR_CONFIG: /dockers/sonarr/config
+SONARR_CONFIG: "{{ ROOTCFG }}/sonarr"
 SONARR_TVSERIES: /dockers/sonarr/tvseries
-SONARR_DOWNLOADS: /dockers/sonarr/downloads
+SONARR_DOWNLOADS: "{{ ROOTDNLD }}/sonarr"
 
-SABNZBD_CONFIG: /dockers/sabnzbd/config
-SABNZBD_DOWNLOADS: /dockers/sabnzbd/downloads
-SABNZBD_INCOMPLETE_DOWNLOADS: /dockers/sabnzbd/incomplete/downloads
+SABNZBD_CONFIG: "{{ ROOTCFG }}/sabnzbd"
+SABNZBD_DOWNLOADS: "{{ ROOTDNLD }}/sabnzbd"
+SABNZBD_INCOMPLETE_DOWNLOADS: "{{ ROOTDNLD }}/sabnzbd/incomplete-downloads"
 
-MYLAR_CONFIG: /dockers/mylar/config
-MYLAR_DOWNLOADS: /dockers/mylar/downloads
-MYLAR_COMICS: /dockers/mylar/comics
+MYLAR_CONFIG: "{{ ROOTCFG }}/mylar"
+MYLAR_DOWNLOADS: "{{ ROOTDNLD }}/mylar"
+MYLAR_COMICS: "{{ ROOTDNLD }}/mylar/comics"
 
-JDOWNLOADER_CONFIG: /dockers/jdownloader/config
-JDOWNLOADER_DOWNLOADS: /dockers/jdownloader/downloads
+JDOWNLOADER_CONFIG: "{{ ROOTCFG }}/jdownloader-2"
+JDOWNLOADER_DOWNLOADS: "{{ ROOTDNLD }}/jdownloader-2"
 
 MUNIN_ADMIN_USERNAME: admin
 MUNIN_ADMIN_PASSWORD: admin123
 
+UNBOUND_CONFIG: "{{ ROOTCFG }}/unbound"
