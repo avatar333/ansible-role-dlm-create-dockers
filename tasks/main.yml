@@ -7,9 +7,9 @@
     enabled: yes
     state: restarted
 
-- include: create_plex.yml
-  tags: create_plex_docker
-  ignore_errors: yes
+#- include: create_plex.yml
+#  tags: create_plex_docker
+#  ignore_errors: yes
 
 - include: create_deluge.yml
   tags: create_deluge_docker
