@@ -27,9 +27,9 @@
   tags: create_mylar_docker
   ignore_errors: yes
 
-- include: create_munin.yml
-  tags: create_munin_docker
-  ignore_errors: yes
+#- include: create_munin.yml
+#  tags: create_munin_docker
+#  ignore_errors: yes
 
 - include: create_jdownloader-2.yml
   tags: create_jdownloader-2_docker
