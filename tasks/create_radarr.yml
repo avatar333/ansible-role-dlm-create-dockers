@@ -1,0 +1,34 @@
+---
+
+# https://hub.docker.com/r/linuxserver/radarr/
+
+- name: "Create directories"
+  file:
+    path: "{{ item }}"
+    state: directory 
+    owner: kevinp
+    group: kevinp
+    mode: 0755
+  with_items:
+    - "{{ RADARR_CONFIG }}"
+    - "{{ RADARR_DOWNLOADS }}"
+
+- name: "Create radarr docker"
+  vars:
+    RADARR_HOSTNAME: radarr
+  command: "docker create --name={{ RADARR_HOSTNAME }} --userns=host --net=host --hostname={{ RADARR_HOSTNAME }} -p 7878:7878 -e VERSION=latest -e PUID=1000 -e PGID=1000 -e TZ=Africa/Johannesburg -v /etc/localtime:/etc/localtime:ro -v {{ RADARR_CONFIG }}:/config -v {{ RADARR_MOVIES }}:/movies -v {{ RADARR_DOWNLOADS }}:/downloads linuxserver/radarr"
+
+- name: "Create radarr.service service file"
+  vars:
+    DOCKER_DESC: "Radarr Server"
+    DOCKER_NAME: radarr
+  template:
+    src: docker_template.service.j2
+    dest: /usr/lib/systemd/system/radarr.service
+
+- name: "Start Radarr docker"
+  systemd:
+    name: radarr
+    daemon_reload: yes
+    enabled: yes
+    state: started

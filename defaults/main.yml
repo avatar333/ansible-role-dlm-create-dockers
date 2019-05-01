@@ -3,6 +3,7 @@
 
 ROOTCFG: /dockers/config
 ROOTDNLD: /dockers/downloads
+SHARED_DOWNLOADS: /dockers/downloads/shared_downloads
 
 PLEX_CONFIG: "{{ ROOTCFG }}/plex"
 PLEX_TVSERIES: /dockers/plex/tvseries
@@ -12,15 +13,25 @@ DELUGE_CONFIG: "{{ ROOTCFG }}/deluge"
 DELUGE_DOWNLOADS: "{{ ROOTDNLD }}/deluge"
 
 SONARR_CONFIG: "{{ ROOTCFG }}/sonarr"
-SONARR_TVSERIES: /dockers/sonarr/tvseries
-SONARR_DOWNLOADS: "{{ ROOTDNLD }}/sonarr"
+#SONARR_TVSERIES: /dockers/sonarr/tvseries
+#SONARR_DOWNLOADS: "{{ ROOTDNLD }}/sonarr"
+SONARR_TVSERIES: "{{ SHARED_DOWNLOADS }}/tvseries"
+SONARR_NFS_SRC_MEDIA03_4TB: "/mnt/NFS_src_media03-4TB/tvseries"
+SONARR_NFS_SRC_MEDIA04_4TB: "/mnt/NFS_src_media04-4TB/tvseries"
+SONARR_ANIMESERIES: "{{ SHARED_DOWNLOADS }}/anime_series"
+SONARR_DOWNLOADS: "{{ ROOTDNLD }}/sabnzbd"
+
+RADARR_CONFIG: "{{ ROOTCFG }}/radarr"
+RADARR_DOWNLOADS: "{{ ROOTDNLD }}/sabnzbd"
+RADARR_MOVIES: "{{ SHARED_DOWNLOADS }}/movies"
 
 SABNZBD_CONFIG: "{{ ROOTCFG }}/sabnzbd"
 SABNZBD_DOWNLOADS: "{{ ROOTDNLD }}/sabnzbd"
 SABNZBD_INCOMPLETE_DOWNLOADS: "{{ ROOTDNLD }}/sabnzbd/incomplete-downloads"
 
 MYLAR_CONFIG: "{{ ROOTCFG }}/mylar"
-MYLAR_DOWNLOADS: "{{ ROOTDNLD }}/mylar"
+#MYLAR_DOWNLOADS: "{{ ROOTDNLD }}/mylar"
+MYLAR_DOWNLOADS: "{{ ROOTDNLD }}/sabnzbd"
 MYLAR_COMICS: "{{ ROOTDNLD }}/mylar/comics"
 
 JDOWNLOADER_CONFIG: "{{ ROOTCFG }}/jdownloader-2"

@@ -16,7 +16,7 @@
 - name: "Create sonarr docker"
   vars:
     SONARR_HOSTNAME: sonarr
-  command: "docker create --name={{ SONARR_HOSTNAME }} --userns=host --net=host --hostname={{ SONARR_HOSTNAME }} -p 8989:8989 -e VERSION=latest -e PUID=1000 -e PGID=1000 -e TZ=Africa/Johannesburg -v /etc/localtime:/etc/localtime:ro -v {{ SONARR_CONFIG }}:/config -v {{ SONARR_TVSERIES }}:/tvseries -v {{ SONARR_DOWNLOADS }}:/downloads linuxserver/sonarr"
+  command: "docker create --name={{ SONARR_HOSTNAME }} --userns=host --net=host --hostname={{ SONARR_HOSTNAME }} -p 8989:8989 -e VERSION=latest -e PUID=1000 -e PGID=1000 -e TZ=Africa/Johannesburg -v /etc/localtime:/etc/localtime:ro -v {{ SONARR_CONFIG }}:/config -v {{ SONARR_TVSERIES }}:/tvseries -v {{ SONARR_NFS_SRC_MEDIA03_4TB }}:/nfs_src_media03_4tb -v {{ SONARR_NFS_SRC_MEDIA04_4TB }}:/nfs_src_media04_4tb -v {{ SONARR_DOWNLOADS }}:/downloads -v {{ SONARR_ANIMESERIES }}:/anime_series linuxserver/sonarr"
 
 - name: "Create sonarr.service service file"
   vars:
@@ -32,3 +32,4 @@
     daemon_reload: yes
     enabled: yes
     state: started
+

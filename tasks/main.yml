@@ -38,3 +38,8 @@
 - include: create_unbound.yml
   tags: create_unbound_docker
   ignore_errors: yes
+
+- include: create_radarr.yml
+  tags: create_radarr_docker
+  ignore_errors: yes
+
