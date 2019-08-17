@@ -18,6 +18,8 @@ SONARR_CONFIG: "{{ ROOTCFG }}/sonarr"
 SONARR_TVSERIES: "{{ SHARED_DOWNLOADS }}/tvseries"
 SONARR_NFS_SRC_MEDIA03_4TB: "/mnt/NFS_src_media03-4TB/tvseries"
 SONARR_NFS_SRC_MEDIA04_4TB: "/mnt/NFS_src_media04-4TB/tvseries"
+NFS_SRC_MEDIA03_4TB_ROOT: "/mnt/NFS_src_media03-4TB"
+NFS_SRC_MEDIA04_4TB_ROOT: "/mnt/NFS_src_media04-4TB"
 SONARR_ANIMESERIES: "{{ SHARED_DOWNLOADS }}/anime_series"
 SONARR_DOWNLOADS: "{{ ROOTDNLD }}/sabnzbd"
 
