@@ -16,7 +16,7 @@
 - name: "Create radarr docker"
   vars:
     RADARR_HOSTNAME: radarr
-  command: "docker create --name={{ RADARR_HOSTNAME }} --userns=host --net=host --hostname={{ RADARR_HOSTNAME }} -p 7878:7878 -e VERSION=latest -e PUID=1000 -e PGID=1000 -e TZ=Africa/Johannesburg -v /etc/localtime:/etc/localtime:ro -v {{ RADARR_CONFIG }}:/config -v {{ RADARR_MOVIES }}:/movies -v {{ RADARR_DOWNLOADS }}:/downloads -v {{ RADARR_DOWNLOADS }}:/downloads -v {{ RADARR_NFS_SRC_MEDIA03_4TB }}:/nfs_src_media03_4tb -v {{ RADARR_NFS_SRC_MEDIA04_4TB }}:/nfs_src_media04_4tb -v /mnt/src_X_media02-4TB:/src_X_media02-4TB linuxserver/radarr"
+  command: "docker create --name={{ RADARR_HOSTNAME }} --userns=host --net=host --hostname={{ RADARR_HOSTNAME }} -p 7878:7878 -e VERSION=latest -e PUID=1000 -e PGID=1000 -e TZ=Africa/Johannesburg -v /etc/localtime:/etc/localtime:ro -v {{ RADARR_CONFIG }}:/config -v {{ RADARR_MOVIES }}:/movies -v {{ RADARR_DOWNLOADS }}:/downloads -v {{ RADARR_DOWNLOADS }}:/downloads -v {{ RADARR_NFS_SRC_MEDIA03_4TB }}:/nfs_src_media03_4tb -v {{ RADARR_NFS_SRC_MEDIA04_4TB }}:/nfs_src_media04_4tb -v /mnt/src_X_media02-4TB:/src_X_media02-4TB -v {{ RADARR_NFS_SRC_MEDIA05_4TB }}:/nfs_src_media05_4tb linuxserver/radarr"
 
 - name: "Create radarr.service service file"
   vars:
