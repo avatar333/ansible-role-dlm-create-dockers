@@ -31,6 +31,7 @@
   template:
     src: docker_template.service_NO_RESTART.j2
     dest: /usr/lib/systemd/system/my-unbound.service
+    backup: true
 
 - name: "Start my-unbound docker"
   systemd:
