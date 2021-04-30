@@ -9,7 +9,7 @@
     owner: kevinp
     group: kevinp
     mode: 0755
-  with_items:
+  loop:
     - "{{ UNBOUND_CONFIG }}"
 
 - name: "Copy template a-records.conf file"
@@ -42,7 +42,7 @@
 
 - name: "Fix up some configuration issues inside the container"
   command: "{{ item }}"
-  with_items:
+  loop:
     - docker exec -i my-unbound /bin/bash -c "sed -i s/1.1.1.1@853/8.8.8.8/g /unbound.sh"
     - docker exec -i my-unbound /bin/bash -c "sed -i s/1.0.0.1@853/8.8.4.4/g /unbound.sh"
   notify:

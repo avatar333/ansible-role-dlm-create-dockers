@@ -9,14 +9,26 @@
     owner: kevinp
     group: kevinp
     mode: 0755
-  with_items:
+  loop:
     - "{{ DELUGE_CONFIG }}"
     - "{{ DELUGE_DOWNLOADS }}"
 
 - name: "Create deluge docker"
   vars:
     DELUGE_HOSTNAME: deluge
-  command: "docker create --name={{ DELUGE_HOSTNAME }} --userns=host --net=host --hostname={{ DELUGE_HOSTNAME }} -e VERSION=latest -e PUID=1000 -e PGID=1000 -e TZ=Africa/Johannesburg -v {{ DELUGE_CONFIG }}:/config -v {{ DELUGE_DOWNLOADS }}:/downloads linuxserver/deluge"
+  shell:
+    cmd: "docker create \ 
+      --name={{ DELUGE_HOSTNAME }} \
+      --userns=host \
+      --net=host \
+      --hostname={{ DELUGE_HOSTNAME }} \
+      -e VERSION=latest \
+      -e PUID=1000 \
+      -e PGID=1000 \
+      -e TZ=Africa/Johannesburg \
+      -v {{ DELUGE_CONFIG }}:/config \
+      -v {{ DELUGE_DOWNLOADS }}:/downloads \
+      ghcr.io/linuxserver/deluge"
 
 - name: "Create deluge.service service file"
   vars:

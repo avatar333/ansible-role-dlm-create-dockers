@@ -9,14 +9,29 @@
     owner: kevinp
     group: kevinp
     mode: 0755
-  with_items:
+  loop:
     - "{{ SONARR_CONFIG }}"
     - "{{ SONARR_DOWNLOADS }}"
 
 - name: "Create sonarr docker"
   vars:
     SONARR_HOSTNAME: sonarr
-  command: "docker create --name={{ SONARR_HOSTNAME }} --userns=host --net=host --hostname={{ SONARR_HOSTNAME }} -p 8989:8989 -e VERSION=latest -e PUID=1000 -e PGID=1000 -e TZ=Africa/Johannesburg -v /etc/localtime:/etc/localtime:ro -v {{ SONARR_CONFIG }}:/config -v {{ SONARR_TVSERIES }}:/tvseries -v {{ SONARR_NFS_SRC_MEDIA03_4TB }}:/nfs_src_media03_4tb -v {{ SONARR_NFS_SRC_MEDIA04_4TB }}:/nfs_src_media04_4tb -v {{ SONARR_DOWNLOADS }}:/downloads -v /mnt/src_X_media02-4TB:/src_X_media02-4TB -v {{ SONARR_ANIMESERIES }}:/anime_series -v {{ NFS_SRC_MEDIA03_4TB_ROOT }}:/nfs_src_media03_4tb_root -v {{ NFS_SRC_MEDIA04_4TB_ROOT }}:/nfs_src_media04_4tb_root -v {{ NFS_SRC_MEDIA05_4TB_ROOT }}:/nfs_src_media05_4tb_root -v {{ NFS_SRC_MEDIA08_4TB_ROOT }}:/nfs_src_media08_4tb_root -v {{ DLM4_SRC_MEDIA01_1TB_ROOT }}:/dlm4_src_media01_1tb_root -v {{ DLM4_SRC_MEDIA07_4TB_ROOT }}:/dlm4_src_media07_4tb_root -v {{ SONARR_MNT_ROOT }}:/mnt_root linuxserver/sonarr" 
+  shell: 
+    cmd: "docker create \
+      --name={{ SONARR_HOSTNAME }} \
+      --userns=host \
+      --net=host \
+      --hostname={{ SONARR_HOSTNAME }} \
+      -p 8989:8989 \
+      -e VERSION=latest \
+      -e PUID=1000 \
+      -e PGID=1000 \
+      -e TZ=Africa/Johannesburg \
+      -v /etc/localtime:/etc/localtime:ro \
+      -v {{ SONARR_CONFIG }}:/config \
+      -v {{ SONARR_TVSERIES }}:/tvseries \
+      -v {{ SONARR_MNT_ROOT }}:/mnt_root \
+      linuxserver/sonarr" 
     
 - name: "Create sonarr.service service file"
   vars:

@@ -7,39 +7,34 @@
     enabled: yes
     state: restarted
 
-#- include: create_plex.yml
-#  tags: create_plex_docker
-#  ignore_errors: yes
+- name: Create base directories (/dockers/config and /dockers/downloads)
+  file:
+    name: "{{ item }}"
+    state: directory
+    mode: 0755
+    owner: kevinp
+    group: kevinp
+  loop:
+    - "{{ ROOTCFG }}"
+    - "{{ ROOTDNLD }}"
 
-- include: create_deluge.yml
+- import_tasks: create_deluge.yml
   tags: create_deluge_docker
   ignore_errors: yes
 
-- include: create_sonarr.yml
+- import_tasks: create_sonarr.yml
   tags: create_sonarr_docker
   ignore_errors: yes
 
-- include: create_sabnzbd.yml
+- import_tasks: create_sabnzbd.yml
   tags: create_sabnzbd_docker
   ignore_errors: yes
 
-- include: create_mylar.yml
-  tags: create_mylar_docker
-  ignore_errors: yes
-
-#- include: create_munin.yml
-#  tags: create_munin_docker
-#  ignore_errors: yes
-
-- include: create_jdownloader-2.yml
+- import_tasks: create_jdownloader-2.yml
   tags: create_jdownloader-2_docker
   ignore_errors: yes
 
-- include: create_unbound.yml
-  tags: create_unbound_docker
-  ignore_errors: yes
-
-- include: create_radarr.yml
+- import_tasks: create_radarr.yml
   tags: create_radarr_docker
   ignore_errors: yes
 

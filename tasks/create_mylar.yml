@@ -9,7 +9,7 @@
     owner: kevinp
     group: kevinp
     mode: 0755
-  with_items:
+  loop:
     - "{{ MYLAR_CONFIG }}"
     - "{{ MYLAR_DOWNLOADS }}"
     - "{{ MYLAR_COMICS }}"

@@ -9,7 +9,7 @@
     owner: kevinp
     group: kevinp
     mode: 0755
-  with_items:
+  loop:
     - "{{ SABNZBD_CONFIG }}"
     - "{{ SABNZBD_DOWNLOADS }}"
     - "{{ SABNZBD_INCOMPLETE_DOWNLOADS }}"
@@ -17,7 +17,20 @@
 - name: "SABNZBD: Create docker"
   vars:
     SABNZBD_HOSTNAME: sabnzbd
-  command: "docker create --name={{ SABNZBD_HOSTNAME }} --userns=host --net=host --hostname={{ SABNZBD_HOSTNAME }} -e VERSION=latest -e PUID=1000 -e PGID=1000 -e TZ=Africa/Johannesburg -v {{ SABNZBD_CONFIG }}:/config -v {{ SABNZBD_DOWNLOADS }}:/downloads -v {{ SABNZBD_INCOMPLETE_DOWNLOADS }}:/incomplete-downloads linuxserver/sabnzbd"
+  shell: 
+    cmd: "docker create \
+      --name={{ SABNZBD_HOSTNAME }} \
+      --userns=host \
+      --net=host \
+      --hostname={{ SABNZBD_HOSTNAME }} \
+      -e VERSION=latest \
+      -e PUID=1000 \
+      -e PGID=1000 \
+      -e TZ=Africa/Johannesburg \
+      -v {{ SABNZBD_CONFIG }}:/config \
+      -v {{ SABNZBD_DOWNLOADS }}:/downloads \
+      -v {{ SABNZBD_INCOMPLETE_DOWNLOADS }}:/incomplete-downloads \
+      linuxserver/sabnzbd"
 
 - name: "SABNZBD: Create sabnzbd.service service file"
   vars:
@@ -36,7 +49,7 @@
 
 - name: "SABNZBD: Wait for docker to start up"
   pause:
-    seconds: 3
+    seconds: 5
 
 - name: "SABNZBD: Change host_whitelist entry in /config/sabnzbd.ini to allow for host checking for nginx web redirects"
   lineinfile:

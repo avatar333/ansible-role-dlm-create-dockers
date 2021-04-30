@@ -9,7 +9,7 @@
     owner: kevinp
     group: kevinp
     mode: 0755
-  with_items:
+  loop:
     - "{{ PLEX_CONFIG }}"
     - "{{ PLEX_TVSERIES }}"
     - "{{ PLEX_MOVIES }}"
